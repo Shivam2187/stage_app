@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/presentation/widgets/movie_card.dart';
 
-import '../../utils/constants.dart';
 import '../providers/movie_provider.dart';
 
 class FavouriteScreen extends StatefulWidget {
@@ -32,7 +31,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
       appBar: AppBar(
         toolbarHeight: 48,
         title: const Text(
-          MovieConstant.movieScreenAppbarTiltle,
+          'Favourite Movies',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,

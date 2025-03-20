@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/connectivity_service.dart';
@@ -34,6 +37,16 @@ class _MovieListScreenState extends State<MovieListScreen> {
     final movieProvider = Provider.of<MovieProvider>(context);
     final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
 
+    if (movieProvider.hasError) {
+      Future.microtask(() {
+        context.push('/errorScreen').then((value) {
+          if (value == true) {
+            movieProvider.fetchMovies();
+          }
+        });
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -58,48 +71,42 @@ class _MovieListScreenState extends State<MovieListScreen> {
       ),
       body: movieProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
-          : movieProvider.hasError
-              ? const Center(
-                  child: Text(MovieConstant.failedtoload,
-                      style: TextStyle(color: Colors.black)))
-              : Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: const InputDecoration(
-                            hintText: MovieConstant.searchMoviesHintText,
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(24))),
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: 12.0)),
-                        onChanged: movieProvider.setSearchQuery,
-                      ),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: movieProvider.movies.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.6,
-                        ),
-                        itemBuilder: (context, index) {
-                          final movie = movieProvider.movies[index];
-                          return MovieCard(
-                            movie: movie,
-                            isFavourite: favoriteProvider.isFavorite(movie.id),
-                            onPressed: () =>
-                                favoriteProvider.toggleFavorite(movie),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                        hintText: MovieConstant.searchMoviesHintText,
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(24))),
+                        contentPadding: EdgeInsets.symmetric(vertical: 12.0)),
+                    onChanged: movieProvider.setSearchQuery,
+                  ),
                 ),
+                Expanded(
+                  child: GridView.builder(
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: movieProvider.movies.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.6,
+                    ),
+                    itemBuilder: (context, index) {
+                      final movie = movieProvider.movies[index];
+                      return MovieCard(
+                        movie: movie,
+                        isFavourite: favoriteProvider.isFavorite(movie.id),
+                        onPressed: () => favoriteProvider.toggleFavorite(movie),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }

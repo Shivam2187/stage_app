@@ -19,7 +19,7 @@ class MovieConstant {
     ),
     Movie(
       id: 2,
-      title: 'The Dark Knight',
+      title: 'Dark Knight',
       overview:
           '''Set within a year after the events of Batman Begins (2005), Batman, Lieutenant James Gordon, and new District Attorney Harvey Dent successfully begin to round up the criminals that plague Gotham City, until a mysterious and sadistic criminal mastermind known only as "The Joker" appears in Gotham, creating a new wave of chaos. Batman's struggle against The Joker becomes deeply personal, forcing him to''',
       moviePoster: 'https://picsum.photos/seed/picsum/200/300',
@@ -52,7 +52,7 @@ class MovieConstant {
     ),
     Movie(
       id: 5,
-      title: 'The Dark Knight 2',
+      title: 'Dark Knight 2',
       overview:
           '''Set within a year after the events of Batman Begins (2005), Batman, Lieutenant James Gordon, and new District Attorney Harvey Dent successfully begin to round up the criminals that plague Gotham City, until a mysterious and sadistic criminal mastermind known only as "The Joker" appears in Gotham, creating a new wave of chaos. Batman's struggle against The Joker becomes deeply personal, forcing him to''',
       moviePoster: 'https://picsum.photos/seed/picsum/200/300',

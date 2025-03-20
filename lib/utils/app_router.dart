@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:stage_app/presentation/screens/favourite_page.dart';
 
 import '../data/models/movie.dart';
+import '../presentation/screens/error_screen.dart';
 import '../presentation/screens/movie_detail_page.dart';
 import '../presentation/screens/movie_list_page.dart';
 
@@ -25,9 +26,12 @@ final routerConfig = GoRouter(
     GoRoute(
       name: 'favouriteScreen',
       path: '/favouriteScreen',
-      builder: (context, state) {
-        return const FavouriteScreen();
-      },
+      builder: (context, state) => const FavouriteScreen(),
+    ),
+    GoRoute(
+      name: 'errorScreen',
+      path: '/errorScreen',
+      builder: (context, state) => const ErrorScreen(),
     ),
   ],
 );
