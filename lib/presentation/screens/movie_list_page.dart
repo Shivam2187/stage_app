@@ -31,8 +31,24 @@ class _MovieListScreenState extends State<MovieListScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Center(child: Text(MovieConstant.movieScreenAppbarTiltle)),
+        toolbarHeight: 48,
+        title: const Text(
+          MovieConstant.movieScreenAppbarTiltle,
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.red,
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              )),
+        ],
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.menu, color: Colors.white),
+        ),
       ),
       body: movieProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -108,8 +124,7 @@ class MovieCard extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: movie.moviePoster,
                 errorWidget: (context, url, error) => const Icon(Icons.error),
-                      fit: BoxFit.cover,
-                
+                fit: BoxFit.cover,
               ),
             ),
             Padding(

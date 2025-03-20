@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         title: 'Movie App',
-    
         debugShowCheckedModeBanner: false,
         home: MovieListScreen(),
       ),
