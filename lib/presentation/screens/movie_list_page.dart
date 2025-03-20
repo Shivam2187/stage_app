@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/data/models/movie.dart';
 
@@ -28,6 +29,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
     final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Center(child: Text(MovieConstant.movieScreenAppbarTiltle)),
         backgroundColor: Colors.red,
@@ -35,7 +37,9 @@ class _MovieListScreenState extends State<MovieListScreen> {
       body: movieProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : movieProvider.hasError
-              ? const Center(child: Text(MovieConstant.failedtoload))
+              ? const Center(
+                  child: Text(MovieConstant.failedtoload,
+                      style: TextStyle(color: Colors.black)))
               : Column(
                   children: [
                     Padding(
@@ -59,7 +63,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 0.7,
+                          childAspectRatio: 0.6,
                         ),
                         itemBuilder: (context, index) {
                           final movie = movieProvider.movies[index];
@@ -98,18 +102,19 @@ class MovieCard extends StatelessWidget {
         );
       },
       child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://image.tmdb.org/t/p/w500${movie.moviePoster}",
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
+        child: Column(
+          children: [
+            Expanded(
+              child: CachedNetworkImage(
+                imageUrl: movie.moviePoster,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                      fit: BoxFit.cover,
+                
               ),
-              Row(
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
@@ -119,11 +124,14 @@ class MovieCard extends StatelessWidget {
                         Text(
                           movie.title,
                           style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         Text(
                           movie.genre,
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(
+                              fontSize: 10, color: Colors.black),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -142,8 +150,8 @@ class MovieCard extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

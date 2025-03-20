@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/data/models/movie.dart';
 
@@ -12,24 +14,80 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
-
     return Scaffold(
       appBar: AppBar(title: Text(movie.title)),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1.8,
+              child: CachedNetworkImage(
+                imageUrl: movie.moviePoster,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ),
+            MovieImageWithRating(
+              movie: movie,
+            ),
+            const Divider(
+              thickness: 2,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child:
+                  Text(movie.overview, style: TextStyle(color: Colors.black)),
+            ),
+            const Divider(
+              thickness: 2,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MovieImageWithRating extends StatelessWidget {
+  final Movie movie;
+  const MovieImageWithRating({super.key, required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+    final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CachedNetworkImage(
-            imageUrl: "https://image.tmdb.org/t/p/w500${movie.moviePoster}",
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-            width: double.infinity,
-            height: 300,
-            fit: BoxFit.cover,
+          Expanded(
+            child: AspectRatio(
+              aspectRatio: .7,
+              child: CachedNetworkImage(
+                imageUrl: movie.moviePoster,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                width: double.infinity,
+                height: 300,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(movie.overview, textAlign: TextAlign.center),
+          const SizedBox(width: 16),
+          const SizedBox(height: 48),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(movie.title, style: const TextStyle(color: Colors.black)),
+              Text(movie.releaseDate,
+                  style: const TextStyle(color: Colors.black)),
+              Text(movie.rating, style: const TextStyle(color: Colors.black)),
+            ],
           ),
+          const SizedBox(width: 36),
           IconButton(
             icon: Icon(
               favoriteProvider.isFavorite(movie.id)

@@ -21,8 +21,14 @@ class Movie {
   @HiveField(4)
   bool isFavorite;
 
-   @HiveField(5)
+  @HiveField(5)
   final String genre;
+
+  @HiveField(6)
+  final String rating;
+
+  @HiveField(7)
+  final String releaseDate;
 
   Movie({
     required this.id,
@@ -30,7 +36,9 @@ class Movie {
     required this.moviePoster,
     required this.overview,
     this.isFavorite = false,
-     required this.genre,
+    required this.genre,
+    required this.rating,
+    required this.releaseDate,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);

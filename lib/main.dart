@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
           create: (context) => FavoriteMoviesProvider(),
         ),
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Movie App',
-        theme: ThemeData.dark(),
+    
         debugShowCheckedModeBanner: false,
-        home: const MovieListScreen(),
+        home: MovieListScreen(),
       ),
     );
   }

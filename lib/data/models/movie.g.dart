@@ -23,13 +23,15 @@ class MovieAdapter extends TypeAdapter<Movie> {
       overview: fields[3] as String,
       isFavorite: fields[4] as bool,
       genre: fields[5] as String,
+      rating: fields[6] as String,
+      releaseDate: fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Movie obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class MovieAdapter extends TypeAdapter<Movie> {
       ..writeByte(4)
       ..write(obj.isFavorite)
       ..writeByte(5)
-      ..write(obj.genre);
+      ..write(obj.genre)
+      ..writeByte(6)
+      ..write(obj.rating)
+      ..writeByte(7)
+      ..write(obj.releaseDate);
   }
 
   @override
@@ -65,7 +71,9 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       moviePoster: json['moviePoster'] as String,
       overview: json['overview'] as String,
       isFavorite: json['isFavorite'] as bool? ?? false,
-      genre: json['movieType'] as String,
+      genre: json['genre'] as String,
+      rating: json['rating'] as String,
+      releaseDate: json['releaseDate'] as String,
     );
 
 Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
@@ -74,5 +82,7 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'moviePoster': instance.moviePoster,
       'overview': instance.overview,
       'isFavorite': instance.isFavorite,
-      'movieType': instance.genre,
+      'genre': instance.genre,
+      'rating': instance.rating,
+      'releaseDate': instance.releaseDate,
     };

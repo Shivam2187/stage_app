@@ -14,6 +14,8 @@ void main() {
       moviePoster: "/test.jpg",
       overview: "Test Overview",
       genre: "Action",
+      rating: "8.0",
+      releaseDate: "2021-01-01",
     );
   });
 
