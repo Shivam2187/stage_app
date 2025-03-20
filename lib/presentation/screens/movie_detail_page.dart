@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/data/models/movie.dart';
 
@@ -86,7 +87,7 @@ class MovieDetailScreen extends StatelessWidget {
                   left: 10,
                   child: IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => context.pop(),
                   ),
                 ),
                 Positioned(
@@ -94,9 +95,7 @@ class MovieDetailScreen extends StatelessWidget {
                   right: 10,
                   child: IconButton(
                     icon: const Icon(Icons.share, color: Colors.white),
-                    onPressed: () {
-                      // Add share functionality here
-                    },
+                    onPressed: () {},
                   ),
                 ),
                 Positioned(

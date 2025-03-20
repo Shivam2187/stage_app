@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/data/models/movie.dart';
 
-import 'package:stage_app/presentation/screens/movie_detail_page.dart';
 
 import '../../utils/constants.dart';
 import '../providers/movie_provider.dart';
@@ -110,12 +109,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MovieDetailScreen(movie: movie),
-          ),
-        );
+        context.push('/movieDetailsScreen', extra: movie);
       },
       child: Card(
         child: Column(

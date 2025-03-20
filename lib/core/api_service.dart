@@ -3,12 +3,12 @@ import '../data/models/movie.dart';
 import '../utils/constants.dart';
 
 class ApiService {
-  final Dio _dio = Dio();
+  //final Dio _dio = Dio();
 
   Future<List<Movie>> fetchMovies() async {
     try {
       // final response = await _dio.get(
-      //   'https://api.themoviedb.org/3/movie/popular',
+      //   url,
       //   queryParameters: {'api_key': 'apiKey'},
       // );
       // final List data = response.data['results'];

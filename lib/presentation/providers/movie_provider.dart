@@ -3,13 +3,14 @@ import 'package:stage_app/core/api_service.dart';
 import 'package:stage_app/data/models/movie.dart';
 
 import '../../core/local_storage.dart';
+import '../../core/locator.dart';
 
 class MovieProvider with ChangeNotifier {
-  final ApiService apiService;
+  final ApiService apiService = locator.get<ApiService>();
   List<Movie> _movies = [];
   String _searchQuery = '';
 
-  MovieProvider(this.apiService);
+  MovieProvider();
 
   List<Movie> get movies => _searchQuery.isEmpty
       ? _movies
