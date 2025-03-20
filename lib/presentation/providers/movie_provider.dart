@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:stage_app/core/api_service.dart';
 import 'package:stage_app/data/models/movie.dart';
@@ -31,6 +33,7 @@ class MovieProvider with ChangeNotifier {
       _movies = await apiService.fetchMovies();
     } catch (e) {
       hasError = true;
+      print(e.toString());
     }
 
     isLoading = false;

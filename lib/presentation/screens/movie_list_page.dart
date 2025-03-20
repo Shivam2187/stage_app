@@ -1,12 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:stage_app/data/models/movie.dart';
 
 import '../../core/connectivity_service.dart';
 import '../../utils/constants.dart';
 import '../providers/movie_provider.dart';
+import '../widgets/movie_card.dart';
 
 class MovieListScreen extends StatefulWidget {
   const MovieListScreen({super.key});
@@ -93,94 +91,15 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           final movie = movieProvider.movies[index];
                           return MovieCard(
                             movie: movie,
-                            favoriteProvider: favoriteProvider,
+                            isFavourite: favoriteProvider.isFavorite(movie.id),
+                            onPressed: () =>
+                                favoriteProvider.toggleFavorite(movie),
                           );
                         },
                       ),
                     ),
                   ],
                 ),
-    );
-  }
-}
-
-class MovieCard extends StatelessWidget {
-  final Movie movie;
-  final FavoriteMoviesProvider favoriteProvider;
-
-  const MovieCard({
-    super.key,
-    required this.movie,
-    required this.favoriteProvider,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (ConnectivityService().connectivityCheck) {
-          context.push('/movieDetailsScreen', extra: movie);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('No Internet Connection'),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      },
-      child: Card(
-        child: Column(
-          children: [
-            Expanded(
-              child: CachedNetworkImage(
-                imageUrl: movie.moviePoster,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          movie.title,
-                          style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                        Text(
-                          movie.genre,
-                          style: const TextStyle(
-                              fontSize: 10, color: Colors.black),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    iconSize: 24,
-                    icon: Icon(
-                      favoriteProvider.isFavorite(movie.id)
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: Colors.red,
-                    ),
-                    onPressed: () => favoriteProvider.toggleFavorite(movie),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

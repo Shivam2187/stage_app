@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+//import 'package:dio/dio.dart';
 import '../data/models/movie.dart';
 import '../utils/constants.dart';
 
@@ -16,7 +16,7 @@ class ApiService {
 
       return MovieConstant.movies;
     } catch (e) {
-      throw Exception("Failed to load movies");
+      throw Exception("Failed to load movies- ${e.toString()}");
     }
   }
 }
