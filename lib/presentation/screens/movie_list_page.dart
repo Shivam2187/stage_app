@@ -118,7 +118,16 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/movieDetailsScreen', extra: movie);
+        if (ConnectivityService().connectivityCheck) {
+          context.push('/movieDetailsScreen', extra: movie);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No Internet Connection'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       },
       child: Card(
         child: Column(
