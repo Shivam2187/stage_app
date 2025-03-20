@@ -15,20 +15,42 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(movie.title)),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            AspectRatio(
-              aspectRatio: 1.8,
-              child: CachedNetworkImage(
-                imageUrl: movie.moviePoster,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                width: double.infinity,
-                height: 300,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.8,
+                  child: CachedNetworkImage(
+                    imageUrl: movie.moviePoster,
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    width: double.infinity,
+                    height: 300,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Positioned(
+                  top: 40,
+                  left: 10,
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                Positioned(
+                  top: 40,
+                  right: 10,
+                  child: IconButton(
+                    icon: const Icon(Icons.share, color: Colors.white),
+                    onPressed: () {
+                      // Add share functionality here
+                    },
+                  ),
+                ),
+              ],
             ),
             MovieImageWithRating(
               movie: movie,
@@ -39,7 +61,7 @@ class MovieDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16),
               child:
-                  Text(movie.overview, style: TextStyle(color: Colors.black)),
+                  Text(movie.overview, style: const TextStyle(color: Colors.black)),
             ),
             const Divider(
               thickness: 2,
