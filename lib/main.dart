@@ -9,7 +9,9 @@ import 'utils/app_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
+
   DependencyInjection().setupLocator();
+
   runApp(const MyApp());
 }
 

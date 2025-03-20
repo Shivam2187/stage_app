@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/data/models/movie.dart';
 
-
+import '../../core/connectivity_service.dart';
 import '../../utils/constants.dart';
 import '../providers/movie_provider.dart';
 
@@ -19,7 +19,16 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<MovieProvider>(context, listen: false).fetchMovies();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ConnectivityService().startListening(context);
+      Provider.of<MovieProvider>(context, listen: false).fetchMovies();
+    });
+  }
+
+  @override
+  void dispose() {
+    ConnectivityService().dispose();
+    super.dispose();
   }
 
   @override

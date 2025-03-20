@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:stage_app/presentation/screens/favourite_page.dart';
 
 import '../data/models/movie.dart';
 import '../presentation/screens/movie_detail_page.dart';
@@ -19,6 +20,13 @@ final routerConfig = GoRouter(
       builder: (context, state) {
         final movie = state.extra as Movie;
         return MovieDetailScreen(movie: movie);
+      },
+    ),
+    GoRoute(
+      name: 'favouriteScreen',
+      path: '/favouriteScreen',
+      builder: (context, state) {
+        return const FavouriteScreen();
       },
     ),
   ],
