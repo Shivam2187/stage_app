@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../utils/constants.dart';
+import '../presentation/providers/provider.dart';
 
 class ConnectivityService {
   static final ConnectivityService _instance = ConnectivityService._internal();
@@ -13,21 +11,28 @@ class ConnectivityService {
 
   ConnectivityService._internal();
 
-  bool connectivityCheck = false;
-
-  void startListening(BuildContext context) {
+  void startListening() {
     _subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
+      needToShowNetworkSnackBar = true;
       if (result == ConnectivityResult.none) {
-        context.push(NavigationPaths.favouriteScreen);
-        connectivityCheck = false;
+        isNetworkAvailable.value = false;
+        isBackOnlineEnable = true;
       } else {
-        if (context.canPop()) {
-          // Check if current path is '/favouriteScreen' additiona req.
-          context.pop();
-        }
-        connectivityCheck = true;
+        isNetworkAvailable.value = true;
+      }
+    });
+  }
+
+  Future<void> checkConnectivity() async {
+    await Connectivity().checkConnectivity().then((ConnectivityResult result) {
+      needToShowNetworkSnackBar = true;
+      if (result == ConnectivityResult.none) {
+        isNetworkAvailable.value = false;
+        isBackOnlineEnable = true;
+      } else {
+        isNetworkAvailable.value = true;
       }
     });
   }

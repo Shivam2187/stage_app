@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:stage_app/data/models/movie.dart';
 
-import '../../core/connectivity_service.dart';
 import '../../utils/constants.dart';
+import '../providers/provider.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -22,7 +22,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (ConnectivityService().connectivityCheck) {
+        if (isNetworkAvailable.value ?? false) {
           context.push(NavigationPaths.movieDetailsScreen, extra: movie);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(

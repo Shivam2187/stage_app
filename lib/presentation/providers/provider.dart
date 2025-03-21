@@ -1,11 +1,16 @@
 // ignore_for_file: avoid_print
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stage_app/core/api_service.dart';
 import 'package:stage_app/data/models/movie.dart';
 
 import '../../core/local_storage.dart';
 import '../../core/locator.dart';
+
+ValueNotifier<bool?> isNetworkAvailable = ValueNotifier<bool?>(null);
+bool isBackOnlineEnable = false;
+bool needToShowNetworkSnackBar = true;
 
 class MovieProvider with ChangeNotifier {
   final ApiService apiService = locator.get<ApiService>();

@@ -18,6 +18,7 @@ class MovieConstant {
   static const noFavouriteMovies = 'No Favourite Movies';
   static const noInternetConnection = 'No Internet Connection';
   static const retry = 'Retry';
+  static const backOnline = 'Back online';
 
   static final movies = [
     Movie(
