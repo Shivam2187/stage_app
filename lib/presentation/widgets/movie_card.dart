@@ -36,13 +36,19 @@ class MovieCard extends StatelessWidget {
         }
       },
       child: Card(
+        elevation: 4,
         child: Column(
           children: [
             Expanded(
-              child: CachedNetworkImage(
-                imageUrl: movie.moviePoster,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(8)),
+                child: CachedNetworkImage(
+                  imageUrl: movie.moviePoster,
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                ),
               ),
             ),
             Padding(
