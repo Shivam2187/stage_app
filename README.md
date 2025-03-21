@@ -1,5 +1,5 @@
 
-# 🎭 Stage App
+# 🎭 Demo Movie List App
 
 ## '''Used Flutter Clean Architecture'''
 
