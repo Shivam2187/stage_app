@@ -11,6 +11,10 @@ class MovieConstant {
   static const searchMoviesHintText = 'Search movies...';
   static const failedtoload = 'Failed to load movies';
   static const trailers = 'Trailers';
+  static const errorScreenTitle = 'Error Screen';
+  static const somethingWentWrong = 'Something Went Wrong';
+
+  static const favouriteMovies = 'Favourite Movies';
 
   static final movies = [
     Movie(
