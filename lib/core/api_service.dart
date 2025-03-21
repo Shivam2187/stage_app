@@ -5,6 +5,7 @@ import '../utils/constants.dart';
 class ApiService {
   //final Dio _dio = Dio();
 
+  /// Given api is not working so I have used local data
   Future<List<Movie>> fetchMovies() async {
     try {
       // final response = await _dio.get(
@@ -13,6 +14,8 @@ class ApiService {
       // );
       // final List data = response.data['results'];
       // return data.map((json) => Movie.fromJson(json)).toList();
+
+      await Future.delayed(const Duration(microseconds: 100));
 
       return MovieConstant.movies;
     } catch (e) {
