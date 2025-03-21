@@ -27,8 +27,9 @@ class MovieCard extends StatelessWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('No Internet Connection'),
+              content: Text(MovieConstant.noInternetConnection),
               backgroundColor: Colors.red,
+              duration: Duration(seconds: 2),
             ),
           );
         }

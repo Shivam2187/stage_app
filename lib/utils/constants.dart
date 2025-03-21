@@ -15,6 +15,9 @@ class MovieConstant {
   static const somethingWentWrong = 'Something Went Wrong';
 
   static const favouriteMovies = 'Favourite Movies';
+  static const noFavouriteMovies = 'No Favourite Movies';
+  static const noInternetConnection = 'No Internet Connection';
+  static const retry = 'Retry';
 
   static final movies = [
     Movie(

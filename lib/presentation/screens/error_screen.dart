@@ -33,7 +33,7 @@ class ErrorScreen extends StatelessWidget {
                 context.pop(true);
               },
               style: const ButtonStyle(),
-              child: const Text('Retry'),
+              child: const Text(MovieConstant.retry),
             ),
           ],
         ),
