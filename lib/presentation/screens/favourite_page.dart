@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/presentation/widgets/movie_card.dart';
 
-import '../providers/movie_provider.dart';
+import '../providers/provider.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});

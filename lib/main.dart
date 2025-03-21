@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:stage_app/core/local_storage.dart';
 import 'package:stage_app/core/locator.dart';
 
-import 'presentation/providers/movie_provider.dart';
+import 'presentation/providers/provider.dart';
 import 'utils/app_router.dart';
 
 void main() async {

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../core/connectivity_service.dart';
 import '../../utils/constants.dart';
-import '../providers/movie_provider.dart';
+import '../providers/provider.dart';
 import '../widgets/movie_card.dart';
 
 class MovieListScreen extends StatefulWidget {
