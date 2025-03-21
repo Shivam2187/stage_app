@@ -99,18 +99,16 @@ class _MovieListScreenState extends State<MovieListScreen> {
             ),
             backgroundColor: Colors.blue,
             actions: [
-              IconButton(
-                onPressed: () {
+              Switch(
+                value: showFavorites,
+                onChanged: (value) {
                   setState(() {
-                    showFavorites = !showFavorites;
+                    showFavorites = value;
                   });
                 },
-                icon: Icon(
-                  showFavorites ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.red,
-                  size: 32,
-                ),
-              ),
+                activeColor: Colors.red,
+                inactiveThumbColor: Colors.white,
+              )
             ],
             leading: IconButton(
               onPressed: () {},
