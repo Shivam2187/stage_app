@@ -36,7 +36,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<MovieProvider>(context);
     final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
-
+// Api error handling
     if (movieProvider.hasError) {
       Future.microtask(() {
         context.push(NavigationPaths.errorScreen).then((value) {
