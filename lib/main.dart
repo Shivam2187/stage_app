@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           create: (context) => MovieProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => FavoriteMoviesProvider(),
+          create: (context) => MovieProvider(),
         ),
       ],
       child: MaterialApp.router(

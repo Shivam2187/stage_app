@@ -16,6 +16,12 @@ class MovieProvider with ChangeNotifier {
   final ApiService apiService = locator.get<ApiService>();
   List<Movie> _movies = [];
   String _searchQuery = '';
+  List<Movie> _favoriteMovies = LocalStorage.getFavorites();
+
+  List<Movie> get favoriteMovies => _favoriteMovies
+      .where((movie) =>
+          movie.title.toLowerCase().contains(_searchQuery.toLowerCase()))
+      .toList();
 
   MovieProvider();
 
@@ -46,15 +52,9 @@ class MovieProvider with ChangeNotifier {
   }
 
   void setSearchQuery(String query) {
-    _searchQuery = query;
+    _searchQuery = query.trim();
     notifyListeners();
   }
-}
-
-class FavoriteMoviesProvider with ChangeNotifier {
-  List<Movie> _favoriteMovies = LocalStorage.getFavorites();
-
-  List<Movie> get favoriteMovies => _favoriteMovies;
 
   void toggleFavorite(Movie movie) {
     movie.isFavorite = !movie.isFavorite;

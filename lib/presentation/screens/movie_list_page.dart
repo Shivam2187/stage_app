@@ -18,6 +18,7 @@ class MovieListScreen extends StatefulWidget {
 }
 
 class _MovieListScreenState extends State<MovieListScreen> {
+  bool showFavorites = false;
   @override
   void initState() {
     super.initState();
@@ -66,7 +67,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<MovieProvider>(context);
-    final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
+
     // Api error handling
     if (movieProvider.hasError) {
       Future.microtask(() {
@@ -99,11 +100,17 @@ class _MovieListScreenState extends State<MovieListScreen> {
             backgroundColor: Colors.blue,
             actions: [
               IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: Colors.white,
-                  )),
+                onPressed: () {
+                  setState(() {
+                    showFavorites = !showFavorites;
+                  });
+                },
+                icon: Icon(
+                  showFavorites ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.red,
+                  size: 32,
+                ),
+              ),
             ],
             leading: IconButton(
               onPressed: () {},
@@ -130,22 +137,33 @@ class _MovieListScreenState extends State<MovieListScreen> {
                         onChanged: movieProvider.setSearchQuery,
                       ),
                     ),
+                    if (showFavorites && movieProvider.favoriteMovies.isEmpty)
+                      const Center(
+                        child: Text(MovieConstant.noFavouriteMovies),
+                      ),
                     Expanded(
                       child: GridView.builder(
+                        keyboardDismissBehavior:
+                            ScrollViewKeyboardDismissBehavior.onDrag,
                         padding: const EdgeInsets.all(8.0),
-                        itemCount: movieProvider.movies.length,
+                        itemCount: showFavorites
+                            ? movieProvider.favoriteMovies.length
+                            : movieProvider.movies.length,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 0.6,
                         ),
                         itemBuilder: (context, index) {
-                          final movie = movieProvider.movies[index];
+                          final movie = showFavorites
+                              ? movieProvider.favoriteMovies[index]
+                              : movieProvider.movies[index];
+
                           return MovieCard(
                             movie: movie,
-                            isFavourite: favoriteProvider.isFavorite(movie.id),
+                            isFavourite: movieProvider.isFavorite(movie.id),
                             onPressed: () =>
-                                favoriteProvider.toggleFavorite(movie),
+                                movieProvider.toggleFavorite(movie),
                           );
                         },
                       ),

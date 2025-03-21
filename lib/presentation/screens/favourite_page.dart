@@ -10,7 +10,7 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
+    final favoriteProvider = Provider.of<MovieProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,

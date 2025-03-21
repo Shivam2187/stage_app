@@ -3,11 +3,11 @@ import 'package:stage_app/data/models/movie.dart';
 import 'package:stage_app/presentation/providers/provider.dart';
 
 void main() {
-  late FavoriteMoviesProvider favoriteMoviesProvider;
+  late MovieProvider favoriteMoviesProvider;
   late Movie testMovie;
 
   setUp(() {
-    favoriteMoviesProvider = FavoriteMoviesProvider();
+    favoriteMoviesProvider = MovieProvider();
     testMovie = Movie(
       id: 1,
       title: "Test Movie",

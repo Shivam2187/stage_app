@@ -22,6 +22,7 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
         if (isNetworkAvailable.value ?? false) {
           context.push(NavigationPaths.movieDetailsScreen, extra: movie);
         } else {
