@@ -15,7 +15,7 @@ class ApiService {
       // final List data = response.data['results'];
       // return data.map((json) => Movie.fromJson(json)).toList();
 
-      await Future.delayed(const Duration(microseconds: 5000));
+      await Future.delayed(const Duration(milliseconds: 200));
 
       return MovieConstant.movies;
     } catch (e) {
