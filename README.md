@@ -20,3 +20,14 @@ Stage App is a Flutter-based mobile application that provides a seamless movie b
 - **Flutter SDK**: `>=3.3.4`
 - **Dart**: `>=3.0.0`
 - Android Emulator / iOS Simulator / Physical Device
+## Dependencies:
+#### dio: ^5.4.0
+####  hive: ^2.2.3
+#### hive_flutter: ^1.1.0
+####  cached_network_image: ^3.4.0
+####  connectivity_plus: ^5.0.2
+####  go_router: ^14.6.2
+####  json_annotation: ^4.8.1
+####  mockito: ^5.4.4
+####  provider: ^6.1.2
+####  get_it: ^8.0.3
