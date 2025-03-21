@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:stage_app/data/models/movie.dart';
 
+import '../../utils/constants.dart';
 import '../providers/movie_provider.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -13,8 +14,6 @@ class MovieDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final favoriteProvider = Provider.of<FavoriteMoviesProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 12,
@@ -30,53 +29,17 @@ class MovieDetailScreen extends StatelessWidget {
                 Column(
                   children: [
                     AspectRatio(
-                      aspectRatio: 1.8,
+                      aspectRatio: 1.75,
                       child: CachedNetworkImage(
                         imageUrl: movie.moviePoster,
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                         width: double.infinity,
-                        height: 300,
                         fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(
-                      height: 24,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(movie.title,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            Text(movie.releaseDate,
-                                style: const TextStyle(color: Colors.black)),
-                            Text(movie.rating,
-                                style: const TextStyle(color: Colors.black)),
-                          ],
-                        ),
-                        const SizedBox(width: 36),
-                        IconButton(
-                          icon: Icon(
-                            favoriteProvider.isFavorite(movie.id)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: Colors.red,
-                            size: 32,
-                          ),
-                          onPressed: () =>
-                              favoriteProvider.toggleFavorite(movie),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 120,
+                      height: 200,
                     ),
                   ],
                 ),
@@ -98,20 +61,9 @@ class MovieDetailScreen extends StatelessWidget {
                 ),
                 Positioned(
                   bottom: 0,
-                  left: 20,
-                  child: SizedBox(
-                    height: 220,
-                    child: AspectRatio(
-                      aspectRatio: .7,
-                      child: CachedNetworkImage(
-                        imageUrl: movie.moviePoster,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                        width: double.infinity,
-                        height: 300,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                  left: 0,
+                  child: MovieImageWithRating(
+                    movie: movie,
                   ),
                 )
               ],
@@ -129,7 +81,7 @@ class MovieDetailScreen extends StatelessWidget {
             ),
             const Padding(
               padding: EdgeInsets.all(16),
-              child: Text('Trailers',
+              child: Text(MovieConstant.trailers,
                   style: TextStyle(color: Colors.red, fontSize: 20)),
             )
           ],
@@ -150,41 +102,49 @@ class MovieImageWithRating extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
+          SizedBox(
+            height: 200,
             child: AspectRatio(
               aspectRatio: .7,
               child: CachedNetworkImage(
                 imageUrl: movie.moviePoster,
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 width: double.infinity,
-                height: 300,
                 fit: BoxFit.cover,
               ),
             ),
           ),
           const SizedBox(width: 16),
-          const SizedBox(height: 48),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+          Row(
             children: [
-              Text(movie.title, style: const TextStyle(color: Colors.black)),
-              Text(movie.releaseDate,
-                  style: const TextStyle(color: Colors.black)),
-              Text(movie.rating, style: const TextStyle(color: Colors.black)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(movie.title,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text(movie.releaseDate,
+                      style: const TextStyle(color: Colors.black)),
+                  Text(movie.rating,
+                      style: const TextStyle(color: Colors.black)),
+                ],
+              ),
+              const SizedBox(width: 24),
+              IconButton(
+                icon: Icon(
+                  favoriteProvider.isFavorite(movie.id)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: Colors.red,
+                  size: 32,
+                ),
+                onPressed: () => favoriteProvider.toggleFavorite(movie),
+              )
             ],
-          ),
-          const SizedBox(width: 36),
-          IconButton(
-            icon: Icon(
-              favoriteProvider.isFavorite(movie.id)
-                  ? Icons.favorite
-                  : Icons.favorite_border,
-              color: Colors.red,
-              size: 32,
-            ),
-            onPressed: () => favoriteProvider.toggleFavorite(movie),
           ),
         ],
       ),

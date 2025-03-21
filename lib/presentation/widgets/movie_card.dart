@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:stage_app/data/models/movie.dart';
 
 import '../../core/connectivity_service.dart';
+import '../../utils/constants.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -22,7 +23,7 @@ class MovieCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (ConnectivityService().connectivityCheck) {
-          context.push('/movieDetailsScreen', extra: movie);
+          context.push(NavigationPaths.movieDetailsScreen, extra: movie);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(

@@ -39,7 +39,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
 
     if (movieProvider.hasError) {
       Future.microtask(() {
-        context.push('/errorScreen').then((value) {
+        context.push(NavigationPaths.errorScreen).then((value) {
           if (value == true) {
             movieProvider.fetchMovies();
           }

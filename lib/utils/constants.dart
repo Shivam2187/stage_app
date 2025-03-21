@@ -1,9 +1,16 @@
 import '../data/models/movie.dart';
 
+class NavigationPaths {
+  static const errorScreen = '/errorScreen';
+  static const favouriteScreen = '/favouriteScreen';
+  static const movieDetailsScreen = '/movieDetailsScreen';
+}
+
 class MovieConstant {
   static const movieScreenAppbarTiltle = 'Movies';
   static const searchMoviesHintText = 'Search movies...';
   static const failedtoload = 'Failed to load movies';
+  static const trailers = 'Trailers';
 
   static final movies = [
     Movie(
