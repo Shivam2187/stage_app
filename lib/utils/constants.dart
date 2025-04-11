@@ -28,7 +28,8 @@ class MovieConstant {
       title: 'The Godfather',
       overview:
           '''The Godfather "Don" Vito Corleone is the head of the Corleone mafia family in New York. He is at the event of his daughter's wedding. Michael, Vito's youngest son and a decorated WWII Marine is also present at the wedding. Michael seems to be uninterested in being a part of the family business. Vito is a powerful man, and is kind to all those who give him respect but is ruthless against''',
-      moviePoster: 'https://picsum.photos/seed/picsum/200/300',
+      moviePoster:
+          'https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
       isFavorite: false,
       genre: 'Action, Science Fiction, Drama',
       rating: '4.5',
@@ -39,7 +40,8 @@ class MovieConstant {
       title: 'Dark Knight',
       overview:
           '''Set within a year after the events of Batman Begins (2005), Batman, Lieutenant James Gordon, and new District Attorney Harvey Dent successfully begin to round up the criminals that plague Gotham City, until a mysterious and sadistic criminal mastermind known only as "The Joker" appears in Gotham, creating a new wave of chaos. Batman's struggle against The Joker becomes deeply personal, forcing him to''',
-      moviePoster: 'https://picsum.photos/seed/picsum/200/300',
+      moviePoster:
+          'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
       isFavorite: false,
       genre: 'Action, Science Fiction, Drama',
       rating: '4.5',
@@ -50,7 +52,8 @@ class MovieConstant {
       title: 'Pulp Fiction',
       overview:
           '''Jules Winnfield (Samuel L. Jackson) and Vincent Vega (John Travolta) are two hitmen who are out to retrieve a suitcase stolen from their employer, mob boss Marsellus Wallace (Ving Rhames). Wallace has also asked Vincent to take his wife Mia (Uma Thurman) out a few days later when Wallace himself will be out of town. Butch Coolidge (Bruce Willis) is an aging boxer who is p''',
-      moviePoster: 'https://picsum.photos/seed/picsum/200/300',
+      moviePoster:
+          'https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg',
       isFavorite: false,
       genre: 'Action, Science Fiction, Drama',
       rating: '4.5',
@@ -61,7 +64,8 @@ class MovieConstant {
       title: 'The Godfather 2',
       overview:
           '''The Godfather "Don" Vito Corleone is the head of the Corleone mafia family in New York. He is at the event of his daughter's wedding. Michael, Vito's youngest son and a decorated WWII Marine is also present at the wedding. Michael seems to be uninterested in being a part of the family business. Vito is a powerful man, and is kind to all those who give him respect but is ruthless against''',
-      moviePoster: 'https://picsum.photos/seed/picsum/200/300',
+      moviePoster:
+          'https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
       isFavorite: false,
       genre: 'Action, Science Fiction, Drama',
       rating: '4.5',
@@ -72,7 +76,8 @@ class MovieConstant {
       title: 'Dark Knight 2',
       overview:
           '''Set within a year after the events of Batman Begins (2005), Batman, Lieutenant James Gordon, and new District Attorney Harvey Dent successfully begin to round up the criminals that plague Gotham City, until a mysterious and sadistic criminal mastermind known only as "The Joker" appears in Gotham, creating a new wave of chaos. Batman's struggle against The Joker becomes deeply personal, forcing him to''',
-      moviePoster: 'https://picsum.photos/seed/picsum/200/300',
+      moviePoster:
+          'https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
       isFavorite: false,
       genre: 'Action, Science Fiction, Drama',
       rating: '4.5',
@@ -83,7 +88,8 @@ class MovieConstant {
       title: 'Pulp Fiction 2',
       overview:
           '''Jules Winnfield (Samuel L. Jackson) and Vincent Vega (John Travolta) are two hitmen who are out to retrieve a suitcase stolen from their employer, mob boss Marsellus Wallace (Ving Rhames). Wallace has also asked Vincent to take his wife Mia (Uma Thurman) out a few days later when Wallace himself will be out of town. Butch Coolidge (Bruce Willis) is an aging boxer who is p''',
-      moviePoster: 'https://picsum.photos/seed/picsum/200/300',
+      moviePoster:
+          'https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg',
       isFavorite: false,
       genre: 'Action, Science Fiction, Drama',
       rating: '4.5',
