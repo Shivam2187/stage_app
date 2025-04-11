@@ -17,7 +17,7 @@ class MovieProvider with ChangeNotifier {
   MovieProvider();
 
   final ApiService apiService = locator.get<ApiService>();
-  List<Movie> _totalLoadedMovies = [];
+  final List<Movie> _totalLoadedMovies = [];
   List<Movie> preFetchMovies = [];
   String _searchQuery = '';
   List<Movie> _favoriteMovies = LocalStorage.getFavorites();
@@ -43,7 +43,7 @@ class MovieProvider with ChangeNotifier {
         return movie.title!.toLowerCase().contains(_searchQuery.toLowerCase());
       }).toList();
 
-  Future<void> fetchMovies({bool isPrefetch = false}) async {
+  Future<void> fetchMovies({bool isPrefetch = false,}) async {
     isLoading = true;
     hasError = false;
     notifyListeners();
