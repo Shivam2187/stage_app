@@ -13,17 +13,14 @@ bool isBackOnlineEnable = false;
 bool needToShowNetworkSnackBar = true;
 
 class MovieProvider with ChangeNotifier {
+  MovieProvider();
+
   final ApiService apiService = locator.get<ApiService>();
   List<Movie> _movies = [];
   String _searchQuery = '';
   List<Movie> _favoriteMovies = LocalStorage.getFavorites();
-
-  List<Movie> get favoriteMovies => _favoriteMovies
-      .where((movie) =>
-          movie.title.toLowerCase().contains(_searchQuery.toLowerCase()))
-      .toList();
-
-  MovieProvider();
+  bool isLoading = false;
+  bool hasError = false;
 
   List<Movie> get movies => _searchQuery.isEmpty
       ? _movies
@@ -32,8 +29,10 @@ class MovieProvider with ChangeNotifier {
               movie.title.toLowerCase().contains(_searchQuery.toLowerCase()))
           .toList();
 
-  bool isLoading = false;
-  bool hasError = false;
+  List<Movie> get favoriteMovies => _favoriteMovies
+      .where((movie) =>
+          movie.title.toLowerCase().contains(_searchQuery.toLowerCase()))
+      .toList();
 
   Future<void> fetchMovies() async {
     isLoading = true;

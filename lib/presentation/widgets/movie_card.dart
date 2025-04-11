@@ -48,6 +48,9 @@ class MovieCard extends StatelessWidget {
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                   fit: BoxFit.cover,
                   width: double.infinity,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 ),
               ),
             ),
@@ -63,14 +66,17 @@ class MovieCard extends StatelessWidget {
                         Text(
                           movie.title,
                           style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                         Text(
                           movie.genre,
                           style: const TextStyle(
-                              fontSize: 10, color: Colors.black),
+                            fontSize: 10,
+                            color: Colors.black,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
