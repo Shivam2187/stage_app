@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stage_app/core/api_service.dart';
 import 'package:stage_app/data/models/movie.dart';
+import 'package:stage_app/utils/constants.dart';
 
 import '../../core/local_storage.dart';
 import '../../core/locator.dart';
@@ -16,15 +17,17 @@ class MovieProvider with ChangeNotifier {
   MovieProvider();
 
   final ApiService apiService = locator.get<ApiService>();
-  List<Movie> _movies = [];
+  List<Movie> _totalLoadedMovies = [];
+  List<Movie> preFetchMovies = [];
   String _searchQuery = '';
   List<Movie> _favoriteMovies = LocalStorage.getFavorites();
   bool isLoading = false;
   bool hasError = false;
+  String currentPageNumber = '1';
 
   List<Movie> get movies => _searchQuery.isEmpty
-      ? _movies
-      : _movies.where((movie) {
+      ? _totalLoadedMovies
+      : _totalLoadedMovies.where((movie) {
           if (movie.title == null) {
             return false;
           }
@@ -40,15 +43,54 @@ class MovieProvider with ChangeNotifier {
         return movie.title!.toLowerCase().contains(_searchQuery.toLowerCase());
       }).toList();
 
-  Future<void> fetchMovies() async {
+  Future<void> fetchMovies({bool isPrefetch = false}) async {
     isLoading = true;
     hasError = false;
     notifyListeners();
 
     try {
-      _movies = await apiService.fetchMovies();
+      final currentMovie =
+          await apiService.fetchMovies(MovieConstant.apiKey, currentPageNumber);
+
+      if (isPrefetch) {
+        if (currentMovie.isListNotEmptyOrNull()) {
+          preFetchMovies
+            ..clear()
+            ..addAll(currentMovie);
+        }
+      } else {
+        if (currentMovie.isListNotEmptyOrNull()) {
+          _totalLoadedMovies.addAll(currentMovie);
+        }
+      }
+
+      currentPageNumber =
+          ((int.tryParse(currentPageNumber) ?? 0) + 1).toString();
     } catch (e) {
       hasError = true;
+      print(e.toString());
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> loadMoreMovies() async {
+    isLoading = true;
+    hasError = false;
+    notifyListeners();
+
+    try {
+      if (preFetchMovies.isListNotEmptyOrNull()) {
+        _totalLoadedMovies.addAll(preFetchMovies);
+        currentPageNumber =
+            ((int.tryParse(currentPageNumber) ?? 0) + 1).toString();
+        fetchMovies(isPrefetch: true);
+      }
+    } catch (e) {
+      hasError = true;
+      currentPageNumber =
+          ((int.tryParse(currentPageNumber) ?? 0) - 1).toString();
       print(e.toString());
     }
 

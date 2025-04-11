@@ -19,19 +19,37 @@ class MovieListScreen extends StatefulWidget {
 
 class _MovieListScreenState extends State<MovieListScreen> {
   bool showFavorites = false;
+  late ScrollController _controller;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ConnectivityService().startListening();
-      Provider.of<MovieProvider>(context, listen: false).fetchMovies();
-    });
+    _controller = ScrollController();
+    inIt();
   }
 
   @override
   void dispose() {
     ConnectivityService().dispose();
     super.dispose();
+  }
+
+  void inIt() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ConnectivityService().startListening();
+      final provider = Provider.of<MovieProvider>(context, listen: false);
+
+      provider.fetchMovies();
+      provider.fetchMovies(isPrefetch: true);
+
+      _controller.addListener(() {
+        if (_controller.position.pixels ==
+                _controller.position.maxScrollExtent &&
+            !provider.isLoading) {
+          provider.loadMoreMovies();
+        }
+      });
+    });
   }
 
   void showSnackBar() {
@@ -74,6 +92,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
         context.push(NavigationPaths.errorScreen).then((value) {
           if (value == true) {
             movieProvider.fetchMovies();
+            movieProvider.fetchMovies(isPrefetch: true);
           }
         });
       });
@@ -169,6 +188,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                       ),
                     Expanded(
                       child: GridView.builder(
+                        controller: _controller,
                         keyboardDismissBehavior:
                             ScrollViewKeyboardDismissBehavior.onDrag,
                         padding: const EdgeInsets.all(8.0),
