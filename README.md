@@ -7,6 +7,7 @@
 Stage App is a Flutter-based mobile application that provides a seamless movie browsing experience. It leverages `Provider` for state management, `Dio` for API interactions, and `Hive` for local storage. The app features **GoRouter-based navigation**, **search functionality**, and **connectivity handling**.
 
 ## ✨ Features
+✅ **Pagination** – Loads data in smaller chunks (pages) to improve performance and user experience.  
 ✅ **Movie Listings** – Fetches and displays a list of movies from an API.  
 ✅ **Search Functionality** – Users can search for movies dynamically.  
 ✅ **Favorites Management** – Save and remove movies from favorites using `Hive`.  
