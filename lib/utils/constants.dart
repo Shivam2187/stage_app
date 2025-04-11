@@ -15,10 +15,12 @@ class MovieConstant {
   static const somethingWentWrong = 'Something Went Wrong';
 
   static const favouriteMovies = 'Favourite Movies';
-  static const noFavouriteMovies = 'No Favourite Movies';
+  static const noFavouriteMovies = 'Oops! Couldn\'t find any favorites...';
   static const noInternetConnection = 'No Internet Connection';
   static const retry = 'Retry';
   static const backOnline = 'Back online';
+  static const notMatchingWithSearch =
+      'Oops! We couldn\'t find anything for that search....';
 
   static final movies = [
     Movie(

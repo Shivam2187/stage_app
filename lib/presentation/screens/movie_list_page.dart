@@ -136,8 +136,36 @@ class _MovieListScreenState extends State<MovieListScreen> {
                       ),
                     ),
                     if (showFavorites && movieProvider.favoriteMovies.isEmpty)
-                      const Center(
-                        child: Text(MovieConstant.noFavouriteMovies),
+                      const Expanded(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Text(
+                              MovieConstant.noFavouriteMovies,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    if (movieProvider.movies.isEmpty && !showFavorites)
+                      const Expanded(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(16),
+                            child: Text(
+                              MovieConstant.notMatchingWithSearch,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     Expanded(
                       child: GridView.builder(
