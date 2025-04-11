@@ -40,6 +40,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
       final provider = Provider.of<MovieProvider>(context, listen: false);
 
       provider.fetchMovies();
+       provider.currentPageNumber =
+            ((int.tryParse(provider.currentPageNumber) ?? 0) + 1).toString();
       provider.fetchMovies(isPrefetch: true);
 
       _controller.addListener(() {
