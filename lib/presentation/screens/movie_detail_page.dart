@@ -143,7 +143,7 @@ class MovieImageWithRating extends StatelessWidget {
                       Text(movie.voteAverage?.toStringAsPrecision(2) ?? '',
                           style: const TextStyle(color: Colors.black)),
                       const SizedBox(width: 4),
-                      const Icon(Icons.star)
+                      const Icon(Icons.star, size: 20),
                     ],
                   ),
                 ],
