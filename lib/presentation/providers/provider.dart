@@ -24,15 +24,21 @@ class MovieProvider with ChangeNotifier {
 
   List<Movie> get movies => _searchQuery.isEmpty
       ? _movies
-      : _movies
-          .where((movie) =>
-              movie.title.toLowerCase().contains(_searchQuery.toLowerCase()))
-          .toList();
+      : _movies.where((movie) {
+          if (movie.title == null) {
+            return false;
+          }
+          return movie.title!
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase());
+        }).toList();
 
-  List<Movie> get favoriteMovies => _favoriteMovies
-      .where((movie) =>
-          movie.title.toLowerCase().contains(_searchQuery.toLowerCase()))
-      .toList();
+  List<Movie> get favoriteMovies => _favoriteMovies.where((movie) {
+        if (movie.title == null) {
+          return false;
+        }
+        return movie.title!.toLowerCase().contains(_searchQuery.toLowerCase());
+      }).toList();
 
   Future<void> fetchMovies() async {
     isLoading = true;

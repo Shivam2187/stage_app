@@ -44,7 +44,8 @@ class MovieCard extends StatelessWidget {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(8)),
                 child: CachedNetworkImage(
-                  imageUrl: movie.moviePoster,
+                  imageUrl:
+                      MovieConstant.baseImageUrl + (movie.posterPath ?? ''),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                   fit: BoxFit.cover,
                   width: double.infinity,
@@ -64,21 +65,42 @@ class MovieCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          movie.title,
+                          movie.title ?? '',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
-                        Text(
-                          movie.genre,
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        Row(
+                          children: [
+                            const Text(
+                              'Rating : ',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              movie.voteAverage
+                                      ?.toStringAsPrecision(2)
+                                      .toString() ??
+                                  '',
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.black,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(width: 4),
+                            const Icon(
+                              Icons.star,
+                              size: 12,
+                            )
+                          ],
                         ),
                       ],
                     ),

@@ -10,7 +10,10 @@ import '../providers/provider.dart';
 class MovieDetailScreen extends StatelessWidget {
   final Movie movie;
 
-  const MovieDetailScreen({super.key, required this.movie});
+  const MovieDetailScreen({
+    super.key,
+    required this.movie,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +34,15 @@ class MovieDetailScreen extends StatelessWidget {
                     AspectRatio(
                       aspectRatio: 1.75,
                       child: CachedNetworkImage(
-                        imageUrl: movie.moviePoster,
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
+                          imageUrl: MovieConstant.baseImageUrl +
+                              (movie.backdropPath ?? ''),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator(),
+                              )),
                     ),
                     const SizedBox(
                       height: 200,
@@ -73,7 +79,7 @@ class MovieDetailScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16),
-              child: Text(movie.overview,
+              child: Text(movie.overview ?? '',
                   style: const TextStyle(color: Colors.black)),
             ),
             const Divider(
@@ -108,11 +114,14 @@ class MovieImageWithRating extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: .7,
               child: CachedNetworkImage(
-                imageUrl: movie.moviePoster,
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+                  imageUrl:
+                      MovieConstant.baseImageUrl + (movie.posterPath ?? ''),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
+                      )),
             ),
           ),
           const SizedBox(width: 16),
@@ -122,15 +131,21 @@ class MovieImageWithRating extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(movie.title,
+                  Text(movie.title ?? '',
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       )),
-                  Text(movie.releaseDate,
+                  Text(movie.releaseDate ?? '',
                       style: const TextStyle(color: Colors.black)),
-                  Text(movie.rating,
-                      style: const TextStyle(color: Colors.black)),
+                  Row(
+                    children: [
+                      Text(movie.voteAverage?.toStringAsPrecision(2) ?? '',
+                          style: const TextStyle(color: Colors.black)),
+                      const SizedBox(width: 4),
+                      const Icon(Icons.star)
+                    ],
+                  ),
                 ],
               ),
               const SizedBox(width: 24),
