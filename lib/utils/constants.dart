@@ -20,6 +20,8 @@ class MovieConstant {
   static const notMatchingWithSearch =
       'Oops! We couldn\'t find anything for that search....';
 
+     static const ratingText =   'Rating : ';
+
   static const baseImageUrl = 'https://image.tmdb.org/t/p/w500';
 
   // static final movies = [

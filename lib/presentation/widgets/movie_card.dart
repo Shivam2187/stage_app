@@ -75,7 +75,7 @@ class MovieCard extends StatelessWidget {
                         Row(
                           children: [
                             const Text(
-                              'Rating : ',
+                              MovieConstant.ratingText,
                               style: TextStyle(
                                 fontSize: 10,
                                 color: Colors.black,
