@@ -18,32 +18,70 @@ class MovieProvider with ChangeNotifier {
 
   final ApiService apiService = locator.get<ApiService>();
   final List<Movie> _totalLoadedMovies = [];
-  List<Movie> preFetchMovies = [];
+  final List<Movie> _preFetchMovies = [];
   String _searchQuery = '';
+
   List<Movie> _favoriteMovies = LocalStorage.getFavorites();
+
   bool isLoading = false;
   bool hasError = false;
+
   String currentPageNumber = '1';
 
   List<Movie> get movies => _searchQuery.isEmpty
       ? _totalLoadedMovies
-      : _totalLoadedMovies.where((movie) {
+      : _totalLoadedMovies.where(
+          (movie) {
+            if (movie.title == null) {
+              return false;
+            }
+            return movie.title!
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase());
+          },
+        ).toList();
+
+  List<Movie> get favoriteMovies => _favoriteMovies.where(
+        (movie) {
           if (movie.title == null) {
             return false;
           }
           return movie.title!
               .toLowerCase()
               .contains(_searchQuery.toLowerCase());
-        }).toList();
+        },
+      ).toList();
 
-  List<Movie> get favoriteMovies => _favoriteMovies.where((movie) {
-        if (movie.title == null) {
-          return false;
-        }
-        return movie.title!.toLowerCase().contains(_searchQuery.toLowerCase());
-      }).toList();
+  void setSearchQuery(String query) {
+    _searchQuery = query.trim();
+    notifyListeners();
+  }
 
-  Future<void> fetchMovies({bool isPrefetch = false,}) async {
+  /// Adding and removing movie from favorite list
+  void toggleFavorite(Movie movie) {
+    movie.isFavorite = !movie.isFavorite;
+    if (movie.isFavorite) {
+      LocalStorage.saveFavorite(movie);
+      _favoriteMovies = [..._favoriteMovies, movie];
+    } else {
+      LocalStorage.removeFavorite(movie.id);
+      _favoriteMovies = _favoriteMovies.where((m) => m.id != movie.id).toList();
+    }
+    notifyListeners();
+  }
+
+  /// Used to check current movie is present in Favourite list
+  bool isFavorite(int movieId) {
+    return _favoriteMovies.any((movie) => movie.id == movieId);
+  }
+
+  /// Pagination Logic :-
+  /// Used for fetch movies with two diffrent condition 1st for just
+  /// fetch movies and stored in cache for future use and
+  /// 2nd for just fetch and show to the screen
+  Future<void> fetchMovies({
+    bool isPrefetch = false,
+  }) async {
     isLoading = true;
     hasError = false;
     notifyListeners();
@@ -54,7 +92,7 @@ class MovieProvider with ChangeNotifier {
 
       if (isPrefetch) {
         if (currentMovie.isListNotEmptyOrNull()) {
-          preFetchMovies
+          _preFetchMovies
             ..clear()
             ..addAll(currentMovie);
         }
@@ -75,14 +113,17 @@ class MovieProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /// This will be called when user scroll to the end of the list and
+  /// prefetch movise will added to cureent avalaible list and then calling Api for
+  /// next prefetch movise
   Future<void> loadMoreMovies() async {
     isLoading = true;
     hasError = false;
     notifyListeners();
 
     try {
-      if (preFetchMovies.isListNotEmptyOrNull()) {
-        _totalLoadedMovies.addAll(preFetchMovies);
+      if (_preFetchMovies.isListNotEmptyOrNull()) {
+        _totalLoadedMovies.addAll(_preFetchMovies);
         currentPageNumber =
             ((int.tryParse(currentPageNumber) ?? 0) + 1).toString();
         fetchMovies(isPrefetch: true);
@@ -96,26 +137,5 @@ class MovieProvider with ChangeNotifier {
 
     isLoading = false;
     notifyListeners();
-  }
-
-  void setSearchQuery(String query) {
-    _searchQuery = query.trim();
-    notifyListeners();
-  }
-
-  void toggleFavorite(Movie movie) {
-    movie.isFavorite = !movie.isFavorite;
-    if (movie.isFavorite) {
-      LocalStorage.saveFavorite(movie);
-      _favoriteMovies = [..._favoriteMovies, movie];
-    } else {
-      LocalStorage.removeFavorite(movie.id);
-      _favoriteMovies = _favoriteMovies.where((m) => m.id != movie.id).toList();
-    }
-    notifyListeners();
-  }
-
-  bool isFavorite(int movieId) {
-    return _favoriteMovies.any((movie) => movie.id == movieId);
   }
 }

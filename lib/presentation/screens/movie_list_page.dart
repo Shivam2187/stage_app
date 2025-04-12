@@ -40,8 +40,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
       final provider = Provider.of<MovieProvider>(context, listen: false);
 
       provider.fetchMovies();
-       provider.currentPageNumber =
-            ((int.tryParse(provider.currentPageNumber) ?? 0) + 1).toString();
+      provider.currentPageNumber =
+          ((int.tryParse(provider.currentPageNumber) ?? 0) + 1).toString();
       provider.fetchMovies(isPrefetch: true);
 
       _controller.addListener(() {
@@ -52,36 +52,6 @@ class _MovieListScreenState extends State<MovieListScreen> {
         }
       });
     });
-  }
-
-  void showSnackBar() {
-    if (isNetworkAvailable.value == false) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(child: Text(MovieConstant.noInternetConnection)),
-              backgroundColor: Colors.red,
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
-      });
-    }
-    if (isBackOnlineEnable && isNetworkAvailable.value == true) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(child: Text(MovieConstant.backOnline)),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 3),
-            ),
-          );
-        }
-      });
-    }
-    needToShowNetworkSnackBar = false;
   }
 
   @override
@@ -104,38 +74,16 @@ class _MovieListScreenState extends State<MovieListScreen> {
       valueListenable: isNetworkAvailable,
       builder: (context, hasError, child) {
         if (needToShowNetworkSnackBar) {
-          showSnackBar();
+          internetStatusSnackbar();
         }
 
         if (isNetworkAvailable.value == false) {
           return const FavouriteScreen();
         }
+
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            toolbarHeight: 48,
-            title: const Text(
-              MovieConstant.movieScreenAppbarTiltle,
-              style: TextStyle(color: Colors.white),
-            ),
-            backgroundColor: Colors.blue,
-            actions: [
-              Switch(
-                value: showFavorites,
-                onChanged: (value) {
-                  setState(() {
-                    showFavorites = value;
-                  });
-                },
-                activeColor: Colors.red,
-                inactiveThumbColor: Colors.white,
-              )
-            ],
-            leading: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.menu, color: Colors.white),
-            ),
-          ),
+          appBar: _appBar(),
           body: movieProvider.isLoading
               ? const Center(child: CircularProgressIndicator())
               : Column(
@@ -143,16 +91,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
-                        decoration: const InputDecoration(
-                            hintText: MovieConstant.searchMoviesHintText,
-                            prefixIcon: Icon(Icons.search),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(24),
-                              ),
-                            ),
-                            contentPadding:
-                                EdgeInsets.symmetric(vertical: 12.0)),
+                        decoration: _textFieldDecoration(),
                         onChanged: movieProvider.setSearchQuery,
                       ),
                     ),
@@ -221,5 +160,75 @@ class _MovieListScreenState extends State<MovieListScreen> {
         );
       },
     );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      toolbarHeight: 48,
+      title: const Text(
+        MovieConstant.movieScreenAppbarTiltle,
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.blue,
+      actions: [
+        Switch(
+          value: showFavorites,
+          onChanged: (value) {
+            setState(() {
+              showFavorites = value;
+            });
+          },
+          activeColor: Colors.red,
+          inactiveThumbColor: Colors.white,
+        )
+      ],
+      leading: IconButton(
+        onPressed: () {},
+        icon: const Icon(Icons.menu, color: Colors.white),
+      ),
+    );
+  }
+
+  InputDecoration _textFieldDecoration() {
+    return const InputDecoration(
+      hintText: MovieConstant.searchMoviesHintText,
+      prefixIcon: Icon(Icons.search),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(24),
+        ),
+      ),
+      contentPadding: EdgeInsets.symmetric(vertical: 12.0),
+    );
+  }
+
+  void internetStatusSnackbar() {
+    if (isNetworkAvailable.value == false) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Center(child: Text(MovieConstant.noInternetConnection)),
+              backgroundColor: Colors.red,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      });
+    }
+    if (isBackOnlineEnable && isNetworkAvailable.value == true) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Center(child: Text(MovieConstant.backOnline)),
+              backgroundColor: Colors.green,
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      });
+    }
+    needToShowNetworkSnackBar = false;
   }
 }
